@@ -1,0 +1,33 @@
+void setup() {
+  // put your setup code here, to run once:
+const int sensorPin = 2;  // Digital Output from Comparison Module
+const int relayPin = 7;   // Relay Module Connected to Digital Pin 7
+const int pumpLED = 13;   // LED to simulate pump (for Wokwi)
+
+void setup() {
+  pinMode(sensorPin, INPUT);  // Soil sensor as input
+  pinMode(relayPin, OUTPUT);  // Relay module as output
+  pinMode(pumpLED, OUTPUT);   // Simulated pump (LED)
+  
+  digitalWrite(relayPin, HIGH); // Ensure relay is OFF at startup
+  digitalWrite(pumpLED, LOW);   // Ensure LED is OFF at startup
+  
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+int soilState = digitalRead(sensorPin); // Read sensor state
+  
+  Serial.print("Soil Moisture Status: ");
+  Serial.println(soilState);
+
+  if (soilState == LOW) {  // Soil is DRY (LOW signal from sensor)
+    digitalWrite(relayPin, LOW); // Turn ON the relay
+    digitalWrite(pumpLED, HIGH); // Simulated pump ON
+    Serial.println("Watering the plant...");
+  } else {  // Soil is WET (HIGH signal from sensor)
+    digitalWrite(relayPin, HIGH); // Turn OFF the relay
+    digitalWrite(pumpLED, LOW);   // Simulated pump OFF
+    Serial.println("Soil is moist. Pump is OFF.");
+}
