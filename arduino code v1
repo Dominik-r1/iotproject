@@ -1,0 +1,17 @@
+const int sensorPin = A0;
+const int pumpPin = 7;
+int sensorValue;
+void setup() {
+  pinMode(pumpPin, OUTPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  sensorValue = analogRead(sensorPin);
+  Serial.println(sensorValue);
+  if (sensorValue < 300) {
+    digitalWrite(pumpPin, HIGH);
+  } else {
+    digitalWrite(pumpPin, LOW);
+  }
+  delay(1000);
+}
